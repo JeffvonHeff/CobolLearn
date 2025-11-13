@@ -1,0 +1,30 @@
+KUNDE-ID: 2345678901
+NAVN: Anna Nielsen
+ADRESSE: Norrebrogade 45 2 N
+BY: 2100 Copenhagen
+KONTAKT: 12345678 anna.nielsen@email.dk
+
+KUNDE-ID: 3456789012
+NAVN: Peter Andersen
+ADRESSE: Vesterbrogade 12 1 TV
+BY: 8000 Aarhus
+KONTAKT: 87654321 peter.andersen@post.dk
+
+KUNDE-ID: 4567890123
+NAVN: Marie Pedersen
+ADRESSE: Ostergade 7 3 SV
+BY: 5000 Odense
+KONTAKT: 65432198 marie.pedersen@mail.dk
+
+KUNDE-ID: 5678901234
+NAVN: Johan Larsen
+ADRESSE: Strandvejen 23 1 TV
+BY: 9000 Aalborg
+KONTAKT: 98765432 johan.larsen@webmail.dk
+
+KUNDE-ID: 1234567890
+NAVN: Lars Hansen
+ADRESSE: Lautruphojvej 1 5 TV
+BY: 2605 Copenhagen
+KONTAKT: 45888888 test.test@test.dk
+
