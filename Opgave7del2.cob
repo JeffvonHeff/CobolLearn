@@ -19,11 +19,11 @@
        
        
        WORKING-STORAGE SECTION.
-       01 END-OF-FILE     PIC X VALUE "N".
-       01 SamletNavn         PIC X(40) VALUE SPACES.
-       01 SamletAdr         PIC X(100) VALUE SPACES.
-       01 PostnrogBy      PIC X(50) VALUE SPACES.
-       01 TelefonogMail PIC X(50) VALUE SPACES.
+       01 END-OF-FILE         PIC X VALUE "N".
+       01 SamletNavn          PIC X(40) VALUE SPACES.
+       01 SamletAdr           PIC X(100) VALUE SPACES.
+       01 PostnrogBy          PIC X(50) VALUE SPACES.
+       01 TelefonogMail       PIC X(50) VALUE SPACES.
        
        PROCEDURE DIVISION.
 
