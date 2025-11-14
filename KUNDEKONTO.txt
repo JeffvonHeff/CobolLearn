@@ -1,0 +1,32 @@
+Kunde-ID: 2345678901 | Navn: Anna Nielsen
+Adresse: Norrebrogade                   45    2     N                , 2100 Copenhagen
+Tlf: 12345678 | Email: anna.nielsen@email.dk
+ Konto-ID: ACC0001234 | Type: Lonkonto             | Saldo: 000180050 DKK
+
+Kunde-ID: 3456789012 | Navn: Peter Andersen
+Adresse: Vesterbrogade                  12    1     TV               , 8000 Aarhus
+Tlf: 87654321 | Email: peter.andersen@post.dk
+ Konto-ID: ACC0002345 | Type: Lonkonto             | Saldo: 000320100 DKK
+ Konto-ID: ACC0006789 | Type: Budgetkonto          | Saldo: 002500000 DKK
+ Konto-ID: ACC0011111 | Type: Investeringskonto    | Saldo: 001250075 DKK
+
+Kunde-ID: 4567890123 | Navn: Marie Pedersen
+Adresse: Ostergade                      7     3     SV               , 5000 Odense
+Tlf: 65432198 | Email: marie.pedersen@mail.dk
+ Konto-ID: ACC0003456 | Type: Lonkonto             | Saldo: 000095025 DKK
+ Konto-ID: ACC0007890 | Type: Pensionskonto        | Saldo: 012500000 DKK
+
+Kunde-ID: 5678901234 | Navn: Johan Larsenen
+Adresse: Strandvejen                    23    1     TV               , 9000 Aalborg
+Tlf: 98765432 | Email: johan.larsen@webmail.dk
+ Konto-ID: ACC0004567 | Type: Lonkonto             | Saldo: 000410150 DKK
+ Konto-ID: ACC0008901 | Type: Opsparingskonto      | Saldo: 007500025 DKK
+ Konto-ID: ACC0012345 | Type: Erhvervskonto        | Saldo: 000875000 DKK
+ Konto-ID: ACC0054321 | Type: Budgetkonto          | Saldo: 000125050 DKK
+
+Kunde-ID: 1234567890 | Navn: Lars Hansennen
+Adresse: Lautruphojvej                  1     5     TV               , 2605 Copenhagen
+Tlf: 45888888 | Email: test.test@test.dk
+ Konto-ID: ACC0005678 | Type: Lonkonto             | Saldo: 000250075 DKK
+ Konto-ID: ACC0009012 | Type: Opsparingskonto      | Saldo: 005000000 DKK
+

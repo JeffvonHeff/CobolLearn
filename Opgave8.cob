@@ -23,7 +23,7 @@
        WORKING-STORAGE SECTION.
        01 EOF-KUNDE PIC X VALUE "N".
        88 END-KUNDE VALUE "Y".             
-88 MORE-KUNDE VALUE "N".             
+       88 MORE-KUNDE VALUE "N".             
        01 EOF-KONTI PIC X VALUE "N".    
        88 END-KONTI VALUE "Y".    
        88 MORE-KONTI VALUE "N".    
@@ -40,13 +40,13 @@
        SET END-KUNDE TO TRUE
        NOT AT END
        *> Formater kundedata
-       PERFORM FORMAT-NAVN
-       PERFORM FORMAT-VEJ
-       PERFORM FORMAT-BY
+           PERFORM FORMAT-NAVN
+           PERFORM FORMAT-VEJ
+           PERFORM FORMAT-BY
        *> Skriv kundeheader og adresse
-       PERFORM SKRIV-KUNDE
+           PERFORM SKRIV-KUNDE
        *> Læs og skriv konti for denne kunde
-       PERFORM LÆS-KONTI
+           PERFORM LÆS-KONTI
        *> Skriv en blank linje mellem kunder
        MOVE SPACES TO OUTPUT-TEXT
        WRITE OUT-REKORD
@@ -148,3 +148,4 @@
        WRITE OUT-REKORD
        EXIT.
        *> Paragraf slut
+       
