@@ -1,0 +1,11 @@
+       02  CPR                PIC X(15).
+       02  NAVN               PIC X(30).
+       02  ADRESSE            PIC X(50).
+       02  FODSELSDATO        PIC X(10).
+       02  KONTO-ID           PIC X(15).
+       02  REG-NR             PIC X(4).
+       02  BELOB              PIC 9(11)V99.
+       02  VALUTA             PIC X(3).
+       02  TRANSAKTIONSTYPE   PIC X(15).
+       02  BUTIK              PIC X(20).
+       02  TIDSPUNKT          PIC X(26).
