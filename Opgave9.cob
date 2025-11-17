@@ -33,8 +33,8 @@
        *> Array til konti på 01 niveau
        01 KONTO-ARRAY OCCURS 50 TIMES.
        COPY "KONTOOPL.cpy".
-       01 KONTO-COUNT PIC 9(3) VALUE 0.
-       01 IX-KONTI PIC 9(3) VALUE 1.
+       01 KONTO-COUNT PIC 9(4) VALUE 0.
+       01 IX-KONTI PIC 9(4) VALUE 1.
        PROCEDURE DIVISION.
        MAIN-PROGRAM.
        *> Læs kontofilen ind i array
@@ -138,4 +138,3 @@
        END-IF
        END-PERFORM
        EXIT.
-       

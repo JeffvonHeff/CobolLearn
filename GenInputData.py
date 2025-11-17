@@ -22,7 +22,7 @@ FIRST_NAMES = [
     "Anne",
     "Peter",
     "Marie",
-    "Søren",
+    "Klaus",
     "Hanne",
     "Niels",
     "Camilla",
@@ -85,7 +85,7 @@ STORES = [
     "Boghandel",
     "Apotek",
     "Tankstation",
-    "Café",
+    "Cafe",
     "Biograf",
     "Moebelbutik",
     "Blomsterhandler",
@@ -107,7 +107,7 @@ BANK_NAMES = [
 
 # Fiktive valutakoder og transaktionstyper
 VALUTA_CODES = ["DKK", "USD", "EUR"]
-TRANSACTION_TYPES = ["Indbetaling", "Udbetaling", "Overførsel"]
+TRANSACTION_TYPES = ["Indbetaling", "Udbetaling", "Overfoersel"]
 
 
 # Funktion til generering af en fødselsdato og CPR-lignende nummer
