@@ -266,6 +266,11 @@
        END-STRING
        WRITE OUT-REKORD
        MOVE SPACES TO OUTPUT-TEXT
+           STRING "-----------------------------------------------"
+           INTO OUTPUT-TEXT
+       END-STRING
+       WRITE OUT-REKORD
+       MOVE SPACES TO OUTPUT-TEXT
        WRITE OUT-REKORD
        WRITE OUT-REKORD
        EXIT.
