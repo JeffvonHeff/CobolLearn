@@ -198,7 +198,7 @@ with open(TRANSACTION_FILE, "w") as file:
         num_transactions = random.randint(1, MAX_TRANSACTIONS_PER_CUSTOMER)
         for _ in range(num_transactions):  # Loop over kundens transaktioner
             transaktions_beløb = round(
-                random.uniform(1.00, 100000.00), 2
+                random.uniform(-100000.00, 100000.00), 2
             )  # Tilfældig beløb
             valutakode = random.choice(VALUTA_CODES)  # Tilfældig valutakode
             transaktions_type = random.choice(TRANSACTION_TYPES)  # Tilfældig type
