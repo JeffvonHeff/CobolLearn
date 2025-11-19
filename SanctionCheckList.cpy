@@ -1,0 +1,9 @@
+       02  SANCTION-ID        PIC X(5).
+       02  NAVN               PIC X(20).
+       02  ALIAS1             PIC X(20).
+       02  ALIAS2             PIC X(20).
+       02  ALIAS3             PIC X(20).
+       02  ALIAS4             PIC X(20).
+       02  ALIAS5             PIC X(20).
+       02  FOEDSELSDATO       PIC X(10).
+       02  LAND               PIC X(2).
