@@ -8,7 +8,7 @@
 
        DATA DIVISION.
        WORKING-STORAGE SECTION.
-       01 VALUTA-RATE PIC 9V9 VALUE 1,0.
+       01 VALUTA-RATE PIC 9V9.
        01 BELOB-TEXT-NORM PIC X(16) VALUE SPACES.
 
        LINKAGE SECTION.
@@ -16,9 +16,11 @@
        01 P-BELOB-RAW PIC X(16).
        01 P-BELOB-DKK PIC S9(13)V99.
 
-       PROCEDURE DIVISION USING P-VALUTA
-                                 P-BELOB-RAW
-                                 P-BELOB-DKK.
+       PROCEDURE DIVISION USING 
+       P-VALUTA
+       P-BELOB-RAW
+       P-BELOB-DKK.
+           
            MOVE 1,0 TO VALUTA-RATE
            IF P-VALUTA(1:3) = "USD"
                MOVE 6,7 TO VALUTA-RATE

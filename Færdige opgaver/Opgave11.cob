@@ -65,7 +65,7 @@
        STOP RUN.
 
        BEHANDL-TRANSAKTION.
-           CALL "TransaktionModul"
+           CALL "Transaktion11Modul"
                USING BY REFERENCE TRANSAKTIONER-REKORD
                      BY REFERENCE TRANSAKTIONER-RAW
                      BY REFERENCE KUNDER

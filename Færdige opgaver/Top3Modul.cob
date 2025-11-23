@@ -27,16 +27,20 @@
        PROCEDURE DIVISION USING BY REFERENCE P-KUNDER
                                  P-KUNDE-COUNT
                                  P-TOP-IDX.
-           MOVE 0 TO P-TOP-POSITION(1) P-TOP-POSITION(2) P-TOP-POSITION(3)
+           MOVE 0 TO P-TOP-POSITION(1) P-TOP-POSITION(2)
+            P-TOP-POSITION(3)
 
-           PERFORM VARYING WS-RANK-IDX FROM 1 BY 1 UNTIL WS-RANK-IDX > 3
+           PERFORM VARYING WS-RANK-IDX FROM 1 BY 1 UNTIL 
+           WS-RANK-IDX > 3
                MOVE 0 TO WS-MAX-IDX
-               PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > P-KUNDE-COUNT
+               PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > 
+               P-KUNDE-COUNT
                    IF WS-IX NOT = P-TOP-POSITION(1)
                       AND WS-IX NOT = P-TOP-POSITION(2)
                       AND WS-IX NOT = P-TOP-POSITION(3)
                       AND (WS-MAX-IDX = 0 OR
-                           P-KUNDE-SALDO(WS-IX) > P-KUNDE-SALDO(WS-MAX-IDX))
+                           P-KUNDE-SALDO(WS-IX) > 
+                           P-KUNDE-SALDO(WS-MAX-IDX))
                        MOVE WS-IX TO WS-MAX-IDX
                    END-IF
                END-PERFORM

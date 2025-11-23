@@ -1,9 +1,12 @@
 Build den
 ---------
-.\cobbuild.bat -x Opgave2.cob -o Opgave2.exe -lcob
+.\cobbuild.bat -x Opgave10.cob -o Opgave10.exe -lcob
 
+Build med moduler
+-------------------
+.\cobbuild.bat -x Opgave10.cob Transaktion10Modul.cob ValutaModul.cob -o Opgave10.exe
 
 Kør den
 -------
-.\Opgave2.exe
+.\Opgave10.exe
 

@@ -24,3 +24,4 @@
 - Formål: Matcher transaktion til bank (REG-NR), konverterer beløb til DKK via ValutaModul, opdaterer totaler/saldo og formatterer transaktionslinje.
 - Interface: `USING TRANSAKTION-REKORD, TRANSAKTION-RAW, BANKER (tabel), BANK-COUNT, TOTAL-POS, TOTAL-NEG, SALDO, OUTPUT-TEXT, FOUND` (BY REFERENCE).
 - Effekt: Opdaterer summer/saldo; sætter `FOUND`="Y" og returnerer formateret linje, hvis bank-match; ellers ingen ændring/udskrift.
+- Navngivning: Parametre er prefikset med `P-` for at tydeliggøre, at de kommer fra LINKAGE SECTION (modtages udefra), i modsætning til interne arbejdsfelter. Det mindsker sammenblanding mellem lokale variabler og ind/ud-argumenter.
