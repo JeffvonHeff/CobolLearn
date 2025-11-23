@@ -1,0 +1,3 @@
+Kunde: Niels Christensen              (CPR: 300893-9739) Saldo (DKK): 3.866.610,75
+Kunde: Hanne Thomsen                  (CPR: 030688-5511) Saldo (DKK): 3.806.561,51
+Kunde: Marie Pedersen                 (CPR: 190373-4161) Saldo (DKK): 3.284.367,01

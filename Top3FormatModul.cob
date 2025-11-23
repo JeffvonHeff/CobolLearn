@@ -1,0 +1,45 @@
+       >>SOURCE FORMAT FREE
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. Top3FormatModul.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-SALDO-DISP PIC -ZZZ.ZZZ.ZZZ.ZZZ.ZZZ.ZZ9,99 VALUE ZEROS.
+       01 WS-SALDO-OUT PIC X(30) VALUE SPACES.
+
+       LINKAGE SECTION.
+       01 P-KUNDE-NAVN PIC X(30).
+       01 P-KUNDE-CPR PIC X(15).
+       01 P-KUNDE-SALDO PIC S9(15)V99.
+       01 P-OUTPUT-TEXT PIC X(150).
+
+       PROCEDURE DIVISION USING BY REFERENCE P-KUNDE-NAVN
+                                 BY REFERENCE P-KUNDE-CPR
+                                 BY REFERENCE P-KUNDE-SALDO
+                                 BY REFERENCE P-OUTPUT-TEXT.
+           MOVE P-KUNDE-SALDO TO WS-SALDO-DISP
+           MOVE SPACES TO WS-SALDO-OUT
+           IF P-KUNDE-SALDO < 0
+               MOVE FUNCTION ABS(P-KUNDE-SALDO) TO WS-SALDO-DISP
+               MOVE "-" TO WS-SALDO-OUT(1:1)
+               MOVE FUNCTION TRIM(WS-SALDO-DISP) TO WS-SALDO-OUT(2:29)
+           ELSE
+               MOVE FUNCTION TRIM(WS-SALDO-DISP) TO WS-SALDO-OUT
+           END-IF
+
+           MOVE SPACES TO P-OUTPUT-TEXT
+           STRING "Kunde: "        DELIMITED BY SIZE
+                  P-KUNDE-NAVN     DELIMITED BY SIZE
+                  " (CPR: "        DELIMITED BY SIZE
+                  FUNCTION TRIM(P-KUNDE-CPR)
+                                   DELIMITED BY SIZE
+                  ") Saldo (DKK): " DELIMITED BY SIZE
+                  WS-SALDO-OUT     DELIMITED BY SIZE
+               INTO P-OUTPUT-TEXT
+           END-STRING
+           GOBACK.

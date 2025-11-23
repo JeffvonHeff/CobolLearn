@@ -1,4 +1,6 @@
-﻿       IDENTIFICATION DIVISION.
+﻿>>SOURCE FORMAT FREE
+       >>SOURCE FORMAT FREE
+       IDENTIFICATION DIVISION.
        PROGRAM-ID. Opgave10.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
@@ -40,12 +42,8 @@
 
        01 PREVIOUSNAVN PIC X(30) VALUE SPACES.
        01 CURRENTNAVN PIC X(30) VALUE SPACES.
-       01 VALUTA-RATE PIC 9(1) VALUE 0.
-       01 BELOB-RAW PIC X(16) VALUE SPACES.
-       01 BELOB-TEXT-NORM PIC X(16) VALUE SPACES.
-       01 BELOB-DKK PIC S9(13)V99 VALUE 0.
-       01 BELOB-DKK-DISP PIC -ZZZ.ZZZ.ZZZ.ZZZ.ZZ9,99 VALUE ZEROS.
-       01 BELOB-DKK-OUT PIC X(30) VALUE SPACES.
+       01 CURRENT-BANKNAVN PIC X(30) VALUE SPACES.
+       01 TRANS-FUNDET PIC X VALUE "N".
        01 TOTAL-POS PIC S9(15)V99 VALUE 0.
        01 TOTAL-NEG PIC S9(15)V99 VALUE 0.
        01 TOTAL-POS-DISP PIC -ZZZ.ZZZ.ZZZ.ZZZ.ZZZ.ZZ9,99 VALUE ZEROS.
@@ -58,9 +56,12 @@
        01 SALDO-OUT PIC X(30) VALUE SPACES.
        
        *> Array til Bank pÃ¥ 01 niveau
-       01 BANK-ARRAY OCCURS 100 TIMES.
-       COPY "BANKS.cpy".
+       01 BANKER.
+          05 BANK-ARRAY OCCURS 100 TIMES.
+             COPY "BANKS.cpy"
+                 REPLACING == 02 == BY == 10 ==.
        PROCEDURE DIVISION.
+       *> Hovedprogram: init, load banker, loop transaktioner, skriv totals
        MAIN-PROGRAM.
            MOVE "Current" TO CURRENTNAVN
            MOVE "Previous" TO PREVIOUSNAVN
@@ -97,8 +98,6 @@
                END-IF
                PERFORM ONLYTRANSAKTION
                MOVE CURRENTNAVN TO PREVIOUSNAVN
-               MOVE SPACES TO OUTPUT-TEXT
-               WRITE OUT-REKORD
                END-READ
        END-PERFORM
        IF PREVIOUSNAVN NOT = "Previous"
@@ -112,11 +111,14 @@
 
  
        EXIT.
+       *> Skriv kunde/bank-stamdata og nulstil summer/saldo ved kundeskift
        MATCH-NAME-AND-BANK.
+       MOVE SPACES TO CURRENT-BANKNAVN
        PERFORM VARYING IX-KONTI FROM 1 BY 1 UNTIL IX-KONTI >=
        BANK-COUNT
        IF REG-NR OF BANK-ARRAY(IX-KONTI) = REG-NR OF 
        TRANSAKTIONER-REKORD
+       MOVE BANKNAVN OF BANK-ARRAY(IX-KONTI) TO CURRENT-BANKNAVN
        MOVE SPACES TO OUTPUT-TEXT
            STRING "Kunde: " NAVN OF TRANSAKTIONER-REKORD
            INTO OUTPUT-TEXT
@@ -178,45 +180,24 @@
        END-PERFORM
        EXIT.
 
-       ONLYTRANSAKTION.
-       PERFORM VARYING IX-KONTI FROM 1 BY 1 UNTIL IX-KONTI >=
-       BANK-COUNT
-       IF REG-NR OF BANK-ARRAY(IX-KONTI) = REG-NR OF 
-       TRANSAKTIONER-REKORD
-       MOVE TRANSAKTIONER-RAW(127:16) TO BELOB-RAW
-       CALL "ValutaModul"
-           USING BY CONTENT VALUTA OF TRANSAKTIONER-REKORD
-                 BY CONTENT BELOB-RAW
-                 BY REFERENCE BELOB-DKK
-       IF BELOB-DKK > 0
-           ADD BELOB-DKK TO TOTAL-POS
-       ELSE
-           ADD BELOB-DKK TO TOTAL-NEG
+      *> Behandl enkelt transaktion via modul (kurs, saldo/summer, linje)
+      ONLYTRANSAKTION.
+       CALL "Transaktion10Modul"
+           USING BY REFERENCE TRANSAKTIONER-REKORD
+                 BY REFERENCE TRANSAKTIONER-RAW
+                 BY REFERENCE BANKER
+                 BY REFERENCE BANK-COUNT
+                 BY REFERENCE TOTAL-POS
+                 BY REFERENCE TOTAL-NEG
+                 BY REFERENCE SALDO
+                 BY REFERENCE OUTPUT-TEXT
+                 BY REFERENCE TRANS-FUNDET
+       IF TRANS-FUNDET = "Y"
+           WRITE OUT-REKORD
        END-IF
-       ADD BELOB-DKK TO SALDO
-       MOVE SPACES TO BELOB-DKK-OUT
-       MOVE BELOB-DKK TO BELOB-DKK-DISP
-       IF BELOB-DKK < 0
-           MOVE FUNCTION ABS(BELOB-DKK) TO BELOB-DKK-DISP
-           MOVE "-" TO BELOB-DKK-OUT(1:1)
-           MOVE FUNCTION TRIM(BELOB-DKK-DISP) TO BELOB-DKK-OUT(2:29)
-       ELSE
-           MOVE FUNCTION TRIM(BELOB-DKK-DISP) TO BELOB-DKK-OUT
-       END-IF
-       MOVE SPACES TO OUTPUT-TEXT
-              STRING "Dato: " TIDSPUNKT OF TRANSAKTIONER-REKORD
-       " Transaktionstype: " TRANSAKTIONSTYPE OF TRANSAKTIONER-REKORD
-       " Beløb (DKK): " BELOB-DKK-OUT
-       " Butik: " BUTIK OF TRANSAKTIONER-REKORD
-           DELIMITED BY SIZE
-           INTO OUTPUT-TEXT
-       END-STRING
-       WRITE OUT-REKORD
-
-       END-IF
-       END-PERFORM
        EXIT.
 
+       *> Udskriv totaler og afsluttende separator/blanke linjer
        PRINT-TOTALS.
        MOVE SPACES TO TOTAL-POS-OUT
        MOVE FUNCTION ABS(TOTAL-POS) TO TOTAL-POS-DISP
@@ -258,6 +239,14 @@
        END-STRING
        WRITE OUT-REKORD
        MOVE SPACES TO OUTPUT-TEXT
+           STRING "Venlig hilsen " CURRENT-BANKNAVN
+           INTO OUTPUT-TEXT
+       END-STRING
+       WRITE OUT-REKORD
+       MOVE SPACES TO OUTPUT-TEXT
+       WRITE OUT-REKORD
+       WRITE OUT-REKORD
+       MOVE SPACES TO OUTPUT-TEXT
            STRING "-----------------------------------------------"
            INTO OUTPUT-TEXT
        END-STRING
@@ -266,3 +255,6 @@
        WRITE OUT-REKORD
        WRITE OUT-REKORD
        EXIT.
+
+
+

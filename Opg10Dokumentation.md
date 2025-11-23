@@ -10,10 +10,10 @@
 - Decimalpunkt er komma via `DECIMAL-POINT IS COMMA`.
 
 ### Centrale datadefinitioner
-- `BANK-ARRAY` (occurs 100) indeholder alle banker fra `Banker.txt` for opslag paa reg.nr.
+- `BANKER.BANK-ARRAY` (occurs 100, copybook via REPLACING 02→10) indeholder banker fra `Banker.txt` til opslag paa reg.nr.
 - `TRANSAKTIONER-REKORD` fra `TRANSACTIONS.cpy` beskriver felter som CPR, NAVN, ADRESSE, REG-NR, KONTO-ID, BELOB, VALUTA, TRANSAKTIONSTYPE, BUTIK, TIDSPUNKT.
 - `TRANSAKTIONER-RAW REDEFINES ... PIC X(211)` giver ra adgang til hele inputlinjen som tekst; bruges til substring-udtraek af beloebsfeltet uden at aendre copybooken.
-- Arbejdsfelter: valuta-rate (`VALUTA-RATE`), beloeb som tekst (`BELOB-RAW`, `BELOB-TEXT-NORM`), beloeb i DKK (`BELOB-DKK` + displayfelter), summer (`TOTAL-POS`, `TOTAL-NEG`), saldo (`SALDO`) og tilhoerende displayfelter.
+- Arbejdsfelter: summer (`TOTAL-POS`, `TOTAL-NEG`), saldo (`SALDO`) og tilhoerende displayfelter, navne-trackere (`CURRENTNAVN`, `PREVIOUSNAVN`), flag for fundet transaktion (`TRANS-FUNDET`).
 - Kunde-tracking: `CURRENTNAVN` og `PREVIOUSNAVN` styrer kundeskift, `IX-KONTI` bruges til at slaa op i bankarrayet.
 
 ### Overordnet kontrolflow
@@ -22,15 +22,15 @@
 3. Aabner transaktions- og outputfil.
 4. Itererer transaktioner:
    - Ved nyt kundenavn: udskriver totals for forrige kunde (hvis ikke foerste) og kalder `MATCH-NAME-AND-BANK` for at skrive kunde- og bankstamdata samt nulstille summer/saldo.
-   - Behandler transaktionen via `ONLYTRANSAKTION` (valutakurs, beloeb, saldo/summer, transaktionslinje).
+   - Behandler transaktionen via `ONLYTRANSAKTION`, som kalder modulet `Transaktion10Modul` (valutaomregning via `ValutaModul`, opdaterer saldo/summer og formatterer transaktionslinje hvis bank-match).
    - Opdaterer `PREVIOUSNAVN` og skriver en blank linje.
 5. Efter EOF: skriver totals for sidste kunde hvis nogen, lukker filer.
 
 ### Detaljeret behandling
-- **Valutahaandtering**: Delegere til `ValutaModul`, som bruger kurser DKK=1, USD=6, EUR=7; andre valutaer behandles som DKK.
-- **Beloebsudtraek og konvertering**: substring `TRANSAKTIONER-RAW(127:16)` -> `BELOB-RAW`; sendes til `ValutaModul`, der trim/normaliserer tekst og bruger `NUMVAL-C` samt kurs til at returnere DKK-beloeb.
-- **Summering**: Positive beloeb laegges i `TOTAL-POS`, negative i `TOTAL-NEG`, begge saelv samme fortegn som beloebene. `SALDO` starter paa 50.000 og opdateres med hvert beloeb.
-- **Udskrift af transaktion**: Formaterer beloeb (haandterer minus separat for pæn visning) og skriver linje med dato, transaktionstype, beloeb (DKK) og butik.
+- **Valutahaandtering**: Ligger i `ValutaModul`, der anvendes af `Transaktion10Modul` (kurser DKK=1, USD=6,7; EUR=7,5; andre = DKK).
+- **Beloebsudtraek og konvertering**: `Transaktion10Modul` tager substring `TRANSAKTIONER-RAW(127:16)`, kalder `ValutaModul` og returnerer beloeb i DKK.
+- **Summering**: I `Transaktion10Modul`; positive beloeb til `TOTAL-POS`, negative til `TOTAL-NEG`, begge med bevaret fortegn; `SALDO` opdateres pr. transaktion; startsaldo 50.000.
+- **Udskrift af transaktion**: `Transaktion10Modul` formaterer beloeb (minus haandteres for pæn visning) og bygger linjen med dato, transaktionstype, beloeb (DKK) og butik; returneres til hovedprogrammet, som skriver linjen hvis bank-match (`TRANS-FUNDET` = "Y").
 - **Udskrift ved kundeskift (`MATCH-NAME-AND-BANK`)**: Finder bank via REG-NR-match. Skriver kundeinfo (navn, adresse), registreringsnummer, banknavn, bankadresse, telefon, e-mail, kontonummer. Nulstiller summer og saldo til startvaerdi.
 - **Totals (`PRINT-TOTALS`)**: Formaterer samlet indbetaling, udbetaling og saldo (inkl. minus-haandtering) og skriver afsluttende separatorlinjer og blanke linjer.
 
