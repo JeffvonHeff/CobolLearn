@@ -72,23 +72,14 @@
 
            CLOSE TRANSAKTIONFIL
            CLOSE OUT-FIL
-           STOP RUN.
+       STOP RUN.
 
        BEHANDL-TRANSAKTION.
-           MOVE 1 TO VALUTA-RATE
-           IF VALUTA OF TRANSAKTIONER-REKORD(1:3) = "USD"
-               MOVE 6 TO VALUTA-RATE
-           ELSE
-               IF VALUTA OF TRANSAKTIONER-REKORD(1:3) = "EUR"
-                   MOVE 7 TO VALUTA-RATE
-               END-IF
-           END-IF
-
            MOVE TRANSAKTIONER-RAW(127:16) TO BELOB-RAW
-           MOVE FUNCTION TRIM(BELOB-RAW) TO BELOB-TEXT-NORM
-           INSPECT BELOB-TEXT-NORM CONVERTING "." TO ","
-           COMPUTE BELOB-DKK = FUNCTION NUMVAL-C(BELOB-TEXT-NORM) *
-               VALUTA-RATE
+           CALL "ValutaModul"
+               USING BY CONTENT VALUTA OF TRANSAKTIONER-REKORD
+                     BY CONTENT BELOB-RAW
+                     BY REFERENCE BELOB-DKK
 
            PERFORM FIND-ELLER-OPRET-KUNDE
            ADD BELOB-DKK TO KUNDE-SALDO(IX)
