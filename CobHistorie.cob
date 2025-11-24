@@ -19,9 +19,12 @@
        
        PROCEDURE DIVISION.
            *> Flyttedag: værdierne flytter ind i de rette rum
+           *> Fyld HUS-IDENTITET med kundeinfo
            MOVE "K123456789"    TO RUM-KUNDE-ID
            MOVE "Lars"          TO RUM-FORNAVN
            MOVE "Hansen"        TO RUM-EFTERNAVN
+           
+           *> Fyld HUS-KONTO med kontonr, balance og valuta
            MOVE "DKK1234567890" TO RUM-KONTONR
            MOVE "15000.75"      TO RUM-BALANCE
            MOVE "DKK"           TO RUM-VALUTA

@@ -59,11 +59,11 @@
                    MOVE WS-BELOB-DKK TO WS-BELOB-DKK-DISP
                    MOVE FUNCTION TRIM(WS-BELOB-DKK-DISP) TO 
                    WS-BELOB-DKK-OUT
-                   PERFORM UNTIL WS-BELOB-DKK-OUT(1:2) NOT = "- "
-                       MOVE WS-BELOB-DKK-OUT(3:28) TO 
-                       WS-BELOB-DKK-OUT(2:28)
+                   IF WS-BELOB-DKK-OUT(1:2) = "- "
                        MOVE "-" TO WS-BELOB-DKK-OUT(1:1)
-                   END-PERFORM
+                       MOVE FUNCTION TRIM(WS-BELOB-DKK-OUT(3:28))
+                           TO WS-BELOB-DKK-OUT(2:29)
+                   END-IF
        
                    MOVE SPACES TO P-OUTPUT-TEXT
                    STRING "Dato: "

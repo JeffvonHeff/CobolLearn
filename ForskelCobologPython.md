@@ -89,9 +89,11 @@ PROCEDURE DIVISION.
 ```python
 def main():
     kunde = {
-        "kunde_id": "K123456789",
-        "fornavn": "Lars",
-        "efternavn": "Hansen",
+        "IDENTITET": {
+            "kunde_id": "K123456789",
+            "fornavn": "Lars",
+            "efternavn": "Hansen",
+        },
         "kontoinfo": {
             "kontonummer": "DKK1234567890",
             "balance": 15000.75,
